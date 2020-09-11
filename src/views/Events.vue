@@ -38,15 +38,51 @@ export default {
           text: "Name",
           align: "start",
           sortable: false,
-          value: "name"
+          value: "name",
+          width: "200"
         },
-        { text: "Avg. Entry Score", value: "average_entry_score" },
-        { text: "Deadline", value: "deadline_time" },
-        { text: "Top Score", value: "highest_score" },
-        { text: "Most Captained", value: "most_captained" },
-        { text: "Most V. Captained", value: "most_vice_captained" },
-        { text: "Most Selected", value: "most_selected" },
-        { text: "Top Player", value: "top_element" }
+        {
+          text: "Avgerage Score",
+          align: "start",
+          value: "average_entry_score",
+          width: "200"
+        },
+        {
+          text: "Deadline",
+          align: "start",
+          value: "deadline_time",
+          width: "200"
+        },
+        {
+          text: "Top Score",
+          align: "start",
+          value: "highest_score",
+          width: "200"
+        },
+        {
+          text: "Most Captained",
+          align: "start",
+          value: "most_captained",
+          width: "200"
+        },
+        {
+          text: "Most V. Captained",
+          align: "start",
+          value: "most_vice_captained",
+          width: "200"
+        },
+        {
+          text: "Most Selected",
+          align: "start",
+          value: "most_selected",
+          width: "200"
+        },
+        {
+          text: "Top Player",
+          align: "start",
+          value: "top_element",
+          width: "200"
+        }
       ]
     };
   },
