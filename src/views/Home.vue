@@ -13,7 +13,9 @@
     </div>
     <v-row>
       <v-col
-        cols="6"
+        cols="12"
+        sm="6"
+        md="6"
         class="mt-8 mb-16"
         v-if="currentEvent && currentEvent.length"
       >
@@ -71,7 +73,13 @@
           </v-card>
         </div>
       </v-col>
-      <v-col cols="6" class="mt-8 mb-16" v-if="nextEvent && nextEvent.length">
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+        class="mt-8 mb-16"
+        v-if="nextEvent && nextEvent.length"
+      >
         <div class="font-weight-black text-h4 text-center">Next Event</div>
         <div class="ma-8" v-for="i in nextEvent" :key="i.name">
           <v-card class="pa-4 text-center">
@@ -126,7 +134,13 @@
           </v-card>
         </div>
       </v-col>
-      <v-col cols="6" class="mt-8 mb-16" v-if="lastEvent && lastEvent.length">
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+        class="mt-8 mb-16"
+        v-if="lastEvent && lastEvent.length"
+      >
         <div class="font-weight-black text-h4 text-center">Last Event</div>
         <div class="ma-8" v-for="i in lastEvent" :key="i.name">
           <v-card class="pa-4 text-center">
