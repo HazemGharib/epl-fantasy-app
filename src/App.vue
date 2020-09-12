@@ -2,6 +2,7 @@
   <v-app>
     <v-app-bar app color="#37003c" dark>
       <v-img
+        ref="logoBtn"
         alt="Vuetify Logo"
         class="logo shrink mr-2"
         contain
@@ -9,7 +10,18 @@
         transition="altscale-transition"
         width="68"
         height="68"
+        @click="showTutorial = false"
         @click.stop="drawer = !drawer"
+      />
+      <tap-target
+        :show="showTutorial"
+        :target="tapTargetFocus"
+        backgroundColor="#37003cee"
+        color="#ffffff"
+        contentLocation="se"
+        title="Tap here"
+        content="To access fantasy premier league menu."
+        @close="showTutorial = false"
       />
       <h1 class="w-title ml-2 d-none d-xl-flex d-lg-flex d-md-flex">
         Fantasy Premier League
@@ -75,15 +87,27 @@ export default Vue.extend({
 
   components: {},
 
-  data: () => ({
-    drawer: null,
-    links: [
-      { url: "/home", text: "Home", icon: "mdi-home" },
-      { url: "/statistics", text: "Statistics", icon: "mdi-numeric" },
-      { url: "/players", text: "Players Hub", icon: "mdi-stadium" },
-      { url: "/events", text: "Events", icon: "mdi-calendar-star" }
-    ]
-  })
+  data() {
+    return {
+      drawer: null,
+      showTutorial: false,
+      tapTargetFocus: null,
+      links: [
+        { url: "/home", text: "Home", icon: "mdi-home" },
+        { url: "/statistics", text: "Statistics", icon: "mdi-numeric" },
+        { url: "/players", text: "Players Hub", icon: "mdi-stadium" },
+        { url: "/events", text: "Events", icon: "mdi-calendar-star" }
+      ]
+    };
+  },
+  mounted() {
+    // eslint-disable-next-line
+    this.tapTargetFocus = this.$refs.logoBtn as any;
+    setTimeout(() => {
+      if (Math.floor(Math.random() * Math.floor(2)) === 0)
+        this.showTutorial = true;
+    }, 2000);
+  }
 });
 </script>
 
