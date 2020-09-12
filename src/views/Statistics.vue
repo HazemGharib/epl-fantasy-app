@@ -1,12 +1,18 @@
 <template>
   <div class="ma-6">
-    <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+    <v-tabs
+      slider-size="4"
+      v-model="tab"
+      background-color="transparent"
+      color="#f7003c"
+      grow
+    >
       <v-tabs-slider color="#f7003c"></v-tabs-slider>
       <v-tab key="standings">Standings</v-tab>
       <v-tab key="statistics">Statistics</v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
+    <v-tabs-items touchless v-model="tab">
       <v-tab-item key="standings">
         <v-card>
           <v-card-title>
