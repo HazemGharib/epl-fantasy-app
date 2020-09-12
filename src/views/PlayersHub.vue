@@ -97,7 +97,7 @@ export default {
           width: "120"
         },
         {
-          text: "Price",
+          text: "Price (M)",
           align: "center",
           value: "cost",
           width: "110"
@@ -123,12 +123,11 @@ export default {
         this.players = data?.results.map(p => ({
           ...p,
           name: `${p.first_name} ${p.last_name}`,
-          cost: `${p.cost / 10} M`,
+          cost: p.cost / 10,
           // eslint-disable-next-line
           chance_of_playing_next_round: p.chance_of_playing_next_round !== null
-              ? `${p.chance_of_playing_next_round} %`
-              : "",
-          selected: p.selected ? `${p.selected} %` : ""
+              ? p.chance_of_playing_next_round
+              : ""
         }));
       });
     });
