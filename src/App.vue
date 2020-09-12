@@ -32,7 +32,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-navigation-drawer color="whitesmoke" v-model="drawer" absolute temporary>
+    <v-navigation-drawer color="whitesmoke" fixed v-model="drawer" temporary>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h4">Menu</v-list-item-title>

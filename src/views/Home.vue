@@ -86,7 +86,6 @@ export default {
         this.nextEvent = data?.results.filter(r => r.is_next);
 
         const lastEvent = data?.results
-          // .filter(i => new Date(i.deadline_time) < new Date())
           .filter(i => i.finished)
           .sort(
             (a, b) => new Date(b.deadline_time) - new Date(a.deadline_time)
