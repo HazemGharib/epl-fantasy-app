@@ -88,6 +88,11 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+@font-face {
+  font-family: "PremierSans";
+  src: local("PremierSans"), url("./fonts/Premier Sans.ttf") format("truetype");
+}
+
 .v-main {
   background-color: whitesmoke;
 }
@@ -95,9 +100,17 @@ export default Vue.extend({
   cursor: pointer;
   background-color: white;
   border-radius: 100%;
+  box-shadow: 0px 8px 20px 0px #000000c0;
 }
 .w-title {
-  font-family: PremierSans-Bold, Arial, "Helvetica Neue", Helvetica, sans-seriff;
-  font-weight: bolder;
+  font-family: PremierSans;
+  font-weight: 100;
+  font-size: xxx-large;
+}
+
+@media screen and (max-width: 910px) {
+  .w-title {
+    font-size: x-large;
+  }
 }
 </style>
