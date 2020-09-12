@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-16">
+  <div class="ma-6">
     <v-card>
       <v-card-title>
         Players Hub
@@ -18,6 +18,7 @@
         :items="players"
         :search="search"
         :items-per-page="15"
+        mobile-breakpoint
       >
         <template v-slot:item.photo="{ item }">
           <v-img :src="item.photo" contain aspect-ratio="1.4"></v-img>

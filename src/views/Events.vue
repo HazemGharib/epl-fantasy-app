@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-16">
+  <div class="ma-6">
     <v-card>
       <v-card-title>
         Events
@@ -18,6 +18,7 @@
         :items="events"
         :search="search"
         :items-per-page="38"
+        mobile-breakpoint
         hide-default-footer
         dense
       ></v-data-table>
