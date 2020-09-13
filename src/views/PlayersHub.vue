@@ -1,6 +1,25 @@
 <template>
   <div class="ma-6">
-    <PlayersHubTable :players="players" />
+    <v-tabs
+      slider-size="4"
+      v-model="tab"
+      background-color="transparent"
+      color="#f7003c"
+      grow
+    >
+      <v-tabs-slider color="#f7003c"></v-tabs-slider>
+      <v-tab key="players-hub">Players Hub</v-tab>
+      <v-tab key="fantasy-team">Fantasy Team</v-tab>
+    </v-tabs>
+
+    <v-tabs-items touchless v-model="tab">
+      <v-tab-item key="players-hub">
+        <PlayersHubTable :players="players" />
+      </v-tab-item>
+      <v-tab-item key="fantasy-team">
+        <FantasyTeamCard />
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -8,12 +27,15 @@
 import { getPlayers } from "@/services/playersHubService";
 import { getToken } from "@/services/tokenService";
 import PlayersHubTable from "@/components/PlayersHub/PlayersHubTable";
+import FantasyTeamCard from "@/components/PlayersHub/FantasyTeamCard";
 export default {
   components: {
-    PlayersHubTable
+    PlayersHubTable,
+    FantasyTeamCard
   },
   data() {
     return {
+      tab: undefined,
       players: undefined
     };
   },
