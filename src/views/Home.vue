@@ -20,58 +20,7 @@
         v-if="currentEvent && currentEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Current Event</div>
-        <div class="ma-8" v-for="i in currentEvent" :key="i.name">
-          <v-card class="pa-4 text-center">
-            <div class="font-weight-black text-h4 px-4 pt-4 pb-3">
-              {{ i.name }}
-            </div>
-            <div class="text-h6 font-italic">
-              {{ new Date(i.deadline_time).toLocaleDateString("en-my") }}
-            </div>
-            <div>Average entry score: {{ i.average_entry_score }}</div>
-            <div>Highest score: {{ i.highest_score || "N/A" }}</div>
-            <div>
-              Most selected:
-              {{
-                i.most_selected
-                  ? `${getPlayer(i.most_selected).first_name} ${
-                      getPlayer(i.most_selected).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Most captained:
-              {{
-                i.most_captained
-                  ? `${getPlayer(i.most_captained).first_name} ${
-                      getPlayer(i.most_captained).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Most vice captained:
-              {{
-                i.most_vice_captained
-                  ? `${getPlayer(i.most_vice_captained).first_name} ${
-                      getPlayer(i.most_vice_captained).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Top Player:
-              {{
-                i.top_element
-                  ? `${getPlayer(i.top_element).first_name} ${
-                      getPlayer(i.top_element).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-          </v-card>
-        </div>
+        <EventCard :event="currentEvent" :players="players" />
       </v-col>
       <v-col
         cols="12"
@@ -81,58 +30,7 @@
         v-if="nextEvent && nextEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Next Event</div>
-        <div class="ma-8" v-for="i in nextEvent" :key="i.name">
-          <v-card class="pa-4 text-center">
-            <div class="font-weight-black text-h4 px-4 pt-4 pb-3">
-              {{ i.name }}
-            </div>
-            <div class="text-h6 font-italic">
-              {{ new Date(i.deadline_time).toLocaleDateString("en-my") }}
-            </div>
-            <div>Average entry score: {{ i.average_entry_score }}</div>
-            <div>Highest score: {{ i.highest_score || "N/A" }}</div>
-            <div>
-              Most selected:
-              {{
-                i.most_selected
-                  ? `${getPlayer(i.most_selected).first_name} ${
-                      getPlayer(i.most_selected).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Most captained:
-              {{
-                i.most_captained
-                  ? `${getPlayer(i.most_captained).first_name} ${
-                      getPlayer(i.most_captained).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Most vice_captained:
-              {{
-                i.most_vice_captained
-                  ? `${getPlayer(i.most_vice_captained).first_name} ${
-                      getPlayer(i.most_vice_captained).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Top Player:
-              {{
-                i.top_element
-                  ? `${getPlayer(i.top_element).first_name} ${
-                      getPlayer(i.top_element).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-          </v-card>
-        </div>
+        <EventCard :event="nextEvent" :players="players" />
       </v-col>
       <v-col
         cols="12"
@@ -142,58 +40,7 @@
         v-if="lastEvent && lastEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Last Event</div>
-        <div class="ma-8" v-for="i in lastEvent" :key="i.name">
-          <v-card class="pa-4 text-center">
-            <div class="font-weight-black text-h4 px-4 pt-4 pb-3">
-              {{ i.name }}
-            </div>
-            <div class="text-h6 font-italic">
-              {{ new Date(i.deadline_time).toLocaleDateString("en-my") }}
-            </div>
-            <div>Average entry score: {{ i.average_entry_score }}</div>
-            <div>Highest score: {{ i.highest_score || "N/A" }}</div>
-            <div>
-              Most selected:
-              {{
-                i.most_selected
-                  ? `${getPlayer(i.most_selected).first_name} ${
-                      getPlayer(i.most_selected).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Most captained:
-              {{
-                i.most_captained
-                  ? `${getPlayer(i.most_captained).first_name} ${
-                      getPlayer(i.most_captained).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Most vice captained:
-              {{
-                i.most_vice_captained
-                  ? `${getPlayer(i.most_vice_captained).first_name} ${
-                      getPlayer(i.most_vice_captained).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-            <div>
-              Top Player:
-              {{
-                i.top_element
-                  ? `${getPlayer(i.top_element).first_name} ${
-                      getPlayer(i.top_element).last_name
-                    }`
-                  : "N/A"
-              }}
-            </div>
-          </v-card>
-        </div>
+        <EventCard :event="lastEvent" :players="players" />
       </v-col>
     </v-row>
   </div>
@@ -203,9 +50,12 @@
 import { getEvents } from "@/services/eventsService";
 import { getPlayers } from "@/services/playersHubService";
 import { getToken } from "@/services/tokenService";
+import EventCard from "@/components/Home/EventCard";
 export default {
   name: "Home",
-  components: {},
+  components: {
+    EventCard
+  },
   data: () => ({
     players: undefined,
     currentEvent: undefined,
@@ -215,7 +65,11 @@ export default {
   mounted() {
     getToken().then(({ data }) => {
       getPlayers(data.token).then(({ data }) => {
-        this.players = data.results;
+        this.players = data.results.map(p => ({
+          id: p.id,
+          // eslint-disable-next-line
+          full_name: `${p.first_name} ${p.last_name} `
+        }));
       });
     });
 
@@ -232,17 +86,12 @@ export default {
         this.lastEvent = lastEvent ? [this.lastEvent] : [];
       });
     });
-  },
-  methods: {
-    getPlayer(id) {
-      return this.players.find(p => p.id === id);
-    }
   }
 };
 </script>
 
 <style scoped>
-.home div {
+.home {
   color: #673d6b;
 }
 </style>

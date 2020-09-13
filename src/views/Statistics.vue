@@ -285,7 +285,6 @@ export default {
           // eslint-disable-next-line
           player_name: `${p.first_name} ${p.last_name}`
         }));
-        console.log(data.results);
       });
     });
   }
