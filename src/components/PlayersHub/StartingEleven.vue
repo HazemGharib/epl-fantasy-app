@@ -188,9 +188,11 @@ export default {
 
 <style scoped>
 .starting {
-  background: url("../../assets/pitch.svg") no-repeat;
-  background-position: 50%;
+  background: url("../../assets/pitch.svg") no-repeat #37003c;
+  background-position: center;
   background-size: cover;
+  max-width: 55rem;
+  margin: 1rem auto;
 }
 .placeholder {
   color: #fff;

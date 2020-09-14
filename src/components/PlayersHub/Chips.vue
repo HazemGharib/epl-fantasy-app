@@ -2,7 +2,7 @@
   <div>
     <v-chip
       class="ma-2"
-      :color="chip.status_for_entry === 'available' ? 'success' : 'danger'"
+      :color="chip.status_for_entry === 'available' ? 'success' : 'error'"
       link
       v-for="chip in chips"
       :key="chip.name"
