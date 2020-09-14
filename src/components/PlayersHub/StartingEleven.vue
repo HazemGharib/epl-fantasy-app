@@ -9,7 +9,24 @@
         )"
         :key="player.element"
       >
+        <v-badge
+          color="black"
+          v-if="player.is_captain || player.is_vice_captain"
+          bottom
+          overlap
+          :content="getPlayerBadge(player)"
+        >
+          <v-img
+            class="shirt"
+            :src="
+              [1].includes(player.position)
+                ? getPlayer(player.element).team_shirt_gk
+                : getPlayer(player.element).team_shirt
+            "
+          />
+        </v-badge>
         <v-img
+          v-else
           class="shirt"
           :src="
             [1].includes(player.position)
@@ -32,7 +49,24 @@
         )"
         :key="player.element"
       >
+        <v-badge
+          color="black"
+          v-if="player.is_captain || player.is_vice_captain"
+          bottom
+          overlap
+          :content="getPlayerBadge(player)"
+        >
+          <v-img
+            class="shirt"
+            :src="
+              [1].includes(player.position)
+                ? getPlayer(player.element).team_shirt_gk
+                : getPlayer(player.element).team_shirt
+            "
+          />
+        </v-badge>
         <v-img
+          v-else
           class="shirt"
           :src="
             [1].includes(player.position)
@@ -55,7 +89,24 @@
         )"
         :key="player.element"
       >
+        <v-badge
+          color="black"
+          v-if="player.is_captain || player.is_vice_captain"
+          bottom
+          overlap
+          :content="getPlayerBadge(player)"
+        >
+          <v-img
+            class="shirt"
+            :src="
+              [1].includes(player.position)
+                ? getPlayer(player.element).team_shirt_gk
+                : getPlayer(player.element).team_shirt
+            "
+          />
+        </v-badge>
         <v-img
+          v-else
           class="shirt"
           :src="
             [1].includes(player.position)
@@ -78,7 +129,24 @@
         )"
         :key="player.element"
       >
+        <v-badge
+          color="black"
+          v-if="player.is_captain || player.is_vice_captain"
+          bottom
+          overlap
+          :content="getPlayerBadge(player)"
+        >
+          <v-img
+            class="shirt"
+            :src="
+              [1].includes(player.position)
+                ? getPlayer(player.element).team_shirt_gk
+                : getPlayer(player.element).team_shirt
+            "
+          />
+        </v-badge>
         <v-img
+          v-else
           class="shirt"
           :src="
             [1].includes(player.position)
@@ -108,6 +176,11 @@ export default {
   methods: {
     getPlayer(id) {
       return this.players.find(p => p.id === id);
+    },
+    getPlayerBadge(player) {
+      if (player.is_captain) return "C";
+      else if (player.is_vice_captain) return "V";
+      else return "";
     }
   }
 };
