@@ -188,7 +188,7 @@ export default {
 
 <style scoped>
 .starting {
-  background: url("http://localhost:8080/img/pitch.41c3cb4c.svg") no-repeat;
+  background: url("../../assets/pitch.svg") no-repeat;
   background-position: 50%;
   background-size: cover;
 }
