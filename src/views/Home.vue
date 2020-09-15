@@ -75,7 +75,9 @@ export default {
 
     getToken().then(({ data }) => {
       getEvents(data.token).then(({ data }) => {
-        this.currentEvent = data?.results.filter(r => r.is_current);
+        this.currentEvent = data?.results.filter(
+          r => r.is_current && !r.finished
+        );
         this.nextEvent = data?.results.filter(r => r.is_next);
 
         const lastEvent = data?.results
@@ -83,7 +85,7 @@ export default {
           .sort(
             (a, b) => new Date(b.deadline_time) - new Date(a.deadline_time)
           )[0];
-        this.lastEvent = lastEvent ? [this.lastEvent] : [];
+        this.lastEvent = lastEvent ? [lastEvent] : [];
       });
     });
   }
