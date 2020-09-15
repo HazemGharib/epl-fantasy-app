@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div v-if="!team || !players" class="pa-16 text-center">
-      <v-progress-circular
-        :size="100"
-        :width="10"
-        color="#37003c"
-        indeterminate
-      ></v-progress-circular>
-    </div>
+    <LoginCard @loginSuccess="value => getFantasyTeam(value)" :team="team" />
+
     <v-card v-if="team && players">
       <v-container>
         <StartingEleven
@@ -37,9 +31,11 @@ import { getToken } from "@/services/tokenService";
 import StartingEleven from "@/components/PlayersHub/StartingEleven";
 import Subs from "@/components/PlayersHub/Subs";
 import Chips from "@/components/PlayersHub/Chips";
+import LoginCard from "@/components/PlayersHub/LoginCard";
 export default {
   name: "FantasyTeamCard",
   components: {
+    LoginCard,
     StartingEleven,
     Subs,
     Chips
@@ -52,7 +48,6 @@ export default {
   },
   mounted() {
     this.getAllPlayers();
-    this.getFantasyTeam(process.env.VUE_APP_FANTASY_TEAM_ID);
   },
   methods: {
     getAllPlayers() {
@@ -70,12 +65,9 @@ export default {
         });
       });
     },
-    getFantasyTeam(team) {
-      getToken().then(({ data }) => {
-        getFantasyTeam(data.token, team).then(({ data }) => {
-          this.team = data.results;
-        });
-      });
+    async getFantasyTeam({ token, session }) {
+      const { results } = (await getFantasyTeam(token, session)).data;
+      this.team = results;
     }
   }
 };

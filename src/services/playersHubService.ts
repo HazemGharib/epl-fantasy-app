@@ -7,15 +7,31 @@ export const getPlayers = async (token: string): Promise<object> =>
     }
   });
 
-export const getFantasyTeam = async (
+export const getFantasySession = async (
   token: string,
-  team: number
+  credentials: { username: string; password: string }
 ): Promise<object> =>
   axios.post(
-    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy-team/${team}`,
+    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy-session`,
     {
-      username: process.env.VUE_APP_FANTASY_TEAM_USER,
-      password: process.env.VUE_APP_FANTASY_TEAM_PASS
+      username: credentials.username,
+      password: credentials.password
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+export const getFantasyTeam = async (
+  token: string,
+  session: object
+): Promise<object> =>
+  axios.post(
+    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy-team`,
+    {
+      session
     },
     {
       headers: {
