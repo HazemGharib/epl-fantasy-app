@@ -8,12 +8,15 @@
     </v-alert>
     <v-text-field
       class="ma-2"
+      color="#943c9b"
       placeholder="Username"
       :disabled="loading"
       v-model="username"
+      hint="john.doe@example.com"
     />
     <v-text-field
       class="ma-2"
+      color="#943c9b"
       placeholder="Password"
       type="password"
       :disabled="loading"
