@@ -20,6 +20,9 @@
       hide-default-footer
       mobile-breakpoint
     >
+      <template slot="progress">
+        <v-progress-linear color="#37003c" indeterminate />
+      </template>
       <template v-slot:item.movement="{ item }">
         <v-icon>{{
           item.position.movement === null ||

@@ -19,6 +19,9 @@
       :items-per-page="10"
       mobile-breakpoint
     >
+      <template slot="progress">
+        <v-progress-linear color="#37003c" indeterminate />
+      </template>
       <template v-slot:item.team_logo="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">

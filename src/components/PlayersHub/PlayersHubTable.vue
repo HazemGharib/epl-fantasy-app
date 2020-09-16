@@ -19,6 +19,9 @@
       :items-per-page="10"
       mobile-breakpoint
     >
+      <template slot="progress">
+        <v-progress-linear color="#37003c" indeterminate />
+      </template>
       <template v-slot:item.photo="{ item }">
         <v-img :src="item.photo" contain aspect-ratio="1.4"></v-img>
       </template>

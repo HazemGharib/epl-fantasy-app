@@ -21,6 +21,9 @@
       hide-default-footer
       dense
     >
+      <template slot="progress">
+        <v-progress-linear color="#37003c" indeterminate />
+      </template>
       <template v-slot:item.most_captained="{ item }">
         {{ getPlayer(item.most_captained) }}
       </template>
