@@ -4,12 +4,12 @@
       <v-img
         ref="logoBtn"
         alt="Vuetify Logo"
-        class="logo shrink mr-2"
+        class="logo shrink mr-2 mt-8"
         contain
         :src="require('./assets/logo.svg')"
         transition="altscale-transition"
-        width="68"
-        height="68"
+        width="70"
+        height="70"
         @click="showTutorial = false"
         @click.stop="drawer = !drawer"
       />

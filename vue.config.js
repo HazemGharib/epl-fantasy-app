@@ -4,9 +4,11 @@ module.exports = {
     themeColor: "#37003c",
     msTileColor: "#37003c",
     display: "standalone",
-    backgroundcolor: "#ffffff",
     name: "EPL Fantasy",
-    manifestOptions: {},
+    manifestOptions: {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      background_color: "#ffffff"
+    },
     icons: [
       {
         src: "./img/icons/android-chrome-192x192.png",
