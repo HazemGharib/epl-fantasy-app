@@ -10,7 +10,8 @@
         "
       />
       <div class="placeholder">
-        {{ getPlayer(player.element).name }}
+        <div>{{ getPlayer(player.element).last_name }}</div>
+        <div>{{ player.points }}</div>
       </div>
     </div>
   </div>
@@ -41,8 +42,8 @@ export default {
   text-align: center;
   background-color: #00000066;
   padding: 0.4rem;
-  margin: 0.4rem -10%;
-  width: fit-content;
+  margin: 0.4rem 5%;
+  width: max-content;
   border-radius: 0.4rem;
   font-size: 14px;
   font-weight: bold;

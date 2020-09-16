@@ -35,7 +35,8 @@
           "
         />
         <div class="placeholder">
-          {{ getPlayer(player.element).name }}
+          <div>{{ getPlayer(player.element).last_name }}</div>
+          <div>{{ player.points }}</div>
         </div>
       </v-col>
     </v-row>
@@ -75,7 +76,8 @@
           "
         />
         <div class="placeholder">
-          {{ getPlayer(player.element).name }}
+          <div>{{ getPlayer(player.element).last_name }}</div>
+          <div>{{ player.points }}</div>
         </div>
       </v-col>
     </v-row>
@@ -115,7 +117,8 @@
           "
         />
         <div class="placeholder">
-          {{ getPlayer(player.element).name }}
+          <div>{{ getPlayer(player.element).last_name }}</div>
+          <div>{{ player.points }}</div>
         </div>
       </v-col>
     </v-row>
@@ -155,7 +158,8 @@
           "
         />
         <div class="placeholder">
-          {{ getPlayer(player.element).name }}
+          <div>{{ getPlayer(player.element).last_name }}</div>
+          <div>{{ player.points }}</div>
         </div>
       </v-col>
     </v-row>
