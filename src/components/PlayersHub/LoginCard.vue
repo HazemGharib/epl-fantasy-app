@@ -3,7 +3,7 @@
     <template slot="progress">
       <v-progress-linear color="#37003c" indeterminate />
     </template>
-    <v-alert v-if="error" border="left" color="error" dismissible dark>
+    <v-alert v-model="error" border="left" color="error" dismissible dark>
       The username or password entered doesn't match any account.
     </v-alert>
     <v-text-field
