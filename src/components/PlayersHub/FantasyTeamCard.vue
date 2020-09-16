@@ -1,9 +1,22 @@
 <template>
   <div>
-    <LoginCard @loginSuccess="value => getFantasyTeam(value)" :team="team" />
+    <LoginCard
+      v-if="!sessionExists()"
+      @loginSuccess="value => getFantasyTeam(value)"
+      :team="team"
+    />
 
-    <v-card v-if="team && players">
+    <v-card v-if="sessionExists()" :loading="!team || !players">
+      <template slot="progress">
+        <v-progress-linear color="#37003c" indeterminate />
+      </template>
       <v-container>
+        <v-btn @click="logout()" color="#37003c" dark>
+          Sign out
+          <v-icon right dark>mdi-logout</v-icon>
+        </v-btn>
+      </v-container>
+      <v-container v-if="team && players">
         <StartingEleven
           :players="players"
           :team="team.picks.filter(p => p.position < 12)"
@@ -47,10 +60,26 @@ export default {
     };
   },
   mounted() {
-    this.getAllPlayers();
+    if (this.sessionExists()) {
+      this.getAllPlayers().then(() => {
+        const session = JSON.parse(this.$cookie.get("eplf_session"));
+        getToken().then(({ data }) => {
+          const { token } = data;
+          this.getFantasyTeam({ token, session });
+        });
+      });
+    }
   },
   methods: {
-    getAllPlayers() {
+    sessionExists() {
+      return this.$cookie.get("eplf_session")?.length > 0;
+    },
+    logout() {
+      this.$cookie.delete("eplf_session");
+      this.team = undefined;
+      this.players = undefined;
+    },
+    async getAllPlayers() {
       getToken().then(({ data }) => {
         getPlayers(data.token).then(({ data }) => {
           this.players = data?.results.map(p => ({
@@ -66,6 +95,9 @@ export default {
       });
     },
     async getFantasyTeam({ token, session }) {
+      if (!this.sessionExists())
+        this.$cookie.set("eplf_session", JSON.stringify(session));
+      this.getAllPlayers();
       const { results } = (await getFantasyTeam(token, session)).data;
       this.team = results;
     }
