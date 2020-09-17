@@ -16,7 +16,7 @@
         cols="12"
         sm="6"
         md="6"
-        class="mt-8 mb-16"
+        class="mt-2 mb-2"
         v-if="currentEvent && currentEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Current Event</div>
@@ -26,7 +26,7 @@
         cols="12"
         sm="6"
         md="6"
-        class="mt-8 mb-16"
+        class="mt-2 mb-2"
         v-if="nextEvent && nextEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Next Event</div>
@@ -36,11 +36,53 @@
         cols="12"
         sm="6"
         md="6"
-        class="mt-8 mb-16"
+        class="mt-2 mb-2"
         v-if="lastEvent && lastEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Last Event</div>
         <EventCard :event="lastEvent" :players="players" />
+      </v-col>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+        class="mt-2 mb-2"
+        v-if="lastEvent && lastEvent.length"
+      >
+        <div class="font-weight-black text-h4 text-center">Goals</div>
+        <StatisticsCard
+          :statistics="goals"
+          :type="'goals'"
+          :players="players"
+        />
+      </v-col>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+        class="mt-2 mb-2"
+        v-if="lastEvent && lastEvent.length"
+      >
+        <div class="font-weight-black text-h4 text-center">Assists</div>
+        <StatisticsCard
+          :statistics="assists"
+          :type="'assists'"
+          :players="players"
+        />
+      </v-col>
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+        class="mt-2 mb-2"
+        v-if="lastEvent && lastEvent.length"
+      >
+        <div class="font-weight-black text-h4 text-center">Clean Sheets</div>
+        <StatisticsCard
+          :statistics="cleanSheets"
+          :type="'cleanSheets'"
+          :players="players"
+        />
       </v-col>
     </v-row>
   </div>
@@ -49,15 +91,21 @@
 <script>
 import { getEvents } from "@/services/eventsService";
 import { getPlayers } from "@/services/playersHubService";
+import { getStatistics } from "@/services/statisticsService";
 import { getToken } from "@/services/tokenService";
 import EventCard from "@/components/Home/EventCard";
+import StatisticsCard from "@/components/Home/StatisticsCard";
 export default {
   name: "Home",
   components: {
-    EventCard
+    EventCard,
+    StatisticsCard
   },
   data: () => ({
     players: undefined,
+    goals: undefined,
+    assists: undefined,
+    cleanSheets: undefined,
     currentEvent: undefined,
     nextEvent: undefined,
     lastEvent: undefined
@@ -68,12 +116,30 @@ export default {
         this.players = data.results.map(p => ({
           id: p.id,
           // eslint-disable-next-line
-          full_name: `${p.first_name} ${p.last_name} `
+          full_name: `${p.first_name} ${p.last_name}`,
+          photo: p.photo
         }));
       });
-    });
 
-    getToken().then(({ data }) => {
+      getStatistics(data.token).then(({ data }) => {
+        const { results } = data;
+        this.goals = results
+          .sort((p1, p2) => p2.goals_scored - p1.goals_scored)
+          .slice(0, 5);
+
+        this.assists = results
+          .sort((p1, p2) => p2.assists - p1.assists)
+          .slice(0, 5);
+
+        this.cleanSheets = results
+          .filter(p => p.position_short === "GKP")
+          .sort((p1, p2) => p2.clean_sheets - p1.clean_sheets)
+          .slice(0, 5);
+        console.log(this.goals);
+        console.log(this.assists);
+        console.log(this.cleanSheets);
+      });
+
       getEvents(data.token).then(({ data }) => {
         this.currentEvent = data?.results.filter(
           r => r.is_current && !r.finished
