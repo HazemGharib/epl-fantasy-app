@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="#37003c" dark>
       <v-img
-        ref="logoBtn"
+        id="logoBtn"
         alt="Vuetify Logo"
         class="logo shrink mr-2 mt-8"
         contain
@@ -15,7 +15,7 @@
       />
       <tap-target
         :show="showTutorial"
-        :target="tapTargetFocus"
+        :target="getTargetButton()"
         backgroundColor="#37003cee"
         color="#ffffff"
         contentLocation="se"
@@ -100,9 +100,12 @@ export default Vue.extend({
       ]
     };
   },
+  methods: {
+    getTargetButton() {
+      return document.getElementById("logoBtn");
+    }
+  },
   mounted() {
-    // eslint-disable-next-line
-    this.tapTargetFocus = this.$refs.logoBtn as any;
     setTimeout(() => {
       if (Math.floor(Math.random() * Math.floor(2)) === 0)
         this.showTutorial = true;
