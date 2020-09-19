@@ -1,6 +1,11 @@
 <template>
   <div class="ma-6">
+    <v-alert v-if="updateAlert" class="ma-10" type="warning" border="left" dark>
+      <strong>Website is being updated now</strong>
+    </v-alert>
+
     <v-tabs
+      v-if="!updateAlert"
       slider-size="4"
       v-model="tab"
       background-color="transparent"
@@ -35,6 +40,7 @@ export default {
   },
   data() {
     return {
+      updateAlert: false,
       standings: undefined,
       statistics: undefined,
       tab: undefined
@@ -43,10 +49,16 @@ export default {
   mounted() {
     getToken().then(({ data }) => {
       getStandings(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         this.standings = data.eplTable;
       });
 
       getStatistics(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         this.statistics = data.results.map(p => ({
           ...p,
           // eslint-disable-next-line

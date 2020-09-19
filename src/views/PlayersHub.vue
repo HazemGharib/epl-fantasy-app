@@ -1,6 +1,11 @@
 <template>
   <div class="ma-6">
+    <v-alert v-if="updateAlert" class="ma-10" type="warning" border="left" dark>
+      <strong>Website is being updated now</strong>
+    </v-alert>
+
     <v-tabs
+      v-if="!updateAlert"
       slider-size="4"
       v-model="tab"
       background-color="transparent"
@@ -35,6 +40,7 @@ export default {
   },
   data() {
     return {
+      updateAlert: false,
       tab: undefined,
       players: undefined
     };
@@ -42,6 +48,9 @@ export default {
   mounted() {
     getToken().then(({ data }) => {
       getPlayers(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         this.players = data?.results.map(p => ({
           ...p,
           name: `${p.first_name} ${p.last_name}`,

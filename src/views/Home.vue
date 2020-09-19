@@ -1,9 +1,10 @@
 <template>
   <div class="home">
-    <div
-      v-if="!currentEvent && !nextEvent && !players"
-      class="ma-16 text-center"
-    >
+    <v-alert v-if="updateAlert" class="ma-10" type="warning" border="left" dark>
+      <strong>Website is being updated now</strong>
+    </v-alert>
+
+    <div v-if="!players && !updateAlert" class="ma-16 text-center">
       <v-progress-circular
         :size="100"
         :width="10"
@@ -11,7 +12,7 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-row>
+    <v-row v-if="!updateAlert">
       <v-col
         cols="12"
         sm="6"
@@ -42,13 +43,7 @@
         <div class="font-weight-black text-h4 text-center">Last Event</div>
         <EventCard :event="lastEvent" :players="players" />
       </v-col>
-      <v-col
-        cols="12"
-        sm="6"
-        md="6"
-        class="mt-2 mb-2"
-        v-if="lastEvent && lastEvent.length"
-      >
+      <v-col cols="12" sm="6" md="6" class="mt-2 mb-2" v-if="players && goals">
         <div class="font-weight-black text-h4 text-center">Goals</div>
         <StatisticsCard
           :statistics="goals"
@@ -61,7 +56,7 @@
         sm="6"
         md="6"
         class="mt-2 mb-2"
-        v-if="lastEvent && lastEvent.length"
+        v-if="players && assists"
       >
         <div class="font-weight-black text-h4 text-center">Assists</div>
         <StatisticsCard
@@ -75,7 +70,7 @@
         sm="6"
         md="6"
         class="mt-2 mb-2"
-        v-if="lastEvent && lastEvent.length"
+        v-if="players && cleanSheets"
       >
         <div class="font-weight-black text-h4 text-center">Clean Sheets</div>
         <StatisticsCard
@@ -102,6 +97,7 @@ export default {
     StatisticsCard
   },
   data: () => ({
+    updateAlert: false,
     players: undefined,
     goals: undefined,
     assists: undefined,
@@ -113,6 +109,9 @@ export default {
   mounted() {
     getToken().then(({ data }) => {
       getPlayers(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         this.players = data.results.map(p => ({
           id: p.id,
           // eslint-disable-next-line
@@ -122,6 +121,9 @@ export default {
       });
 
       getStatistics(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         const { results } = data;
         this.goals = results
           .sort((p1, p2) => p2.goals_scored - p1.goals_scored)
@@ -141,6 +143,9 @@ export default {
       });
 
       getEvents(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         this.currentEvent = data?.results.filter(
           r => r.is_current && !r.finished
         );

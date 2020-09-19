@@ -1,6 +1,9 @@
 <template>
   <div class="ma-6">
-    <EventsTable :events="events" :players="players" />
+    <v-alert v-if="updateAlert" class="mt-16" type="warning" border="left" dark>
+      <strong>Website is being updated now</strong>
+    </v-alert>
+    <EventsTable v-if="!updateAlert" :events="events" :players="players" />
   </div>
 </template>
 
@@ -15,6 +18,7 @@ export default {
   },
   data() {
     return {
+      updateAlert: false,
       events: undefined,
       players: undefined
     };
@@ -22,6 +26,9 @@ export default {
   mounted() {
     getToken().then(({ data }) => {
       getPlayers(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
         this.players = data.results.map(p => ({
           id: p.id,
           // eslint-disable-next-line
@@ -31,6 +38,9 @@ export default {
     });
 
     getToken().then(({ data }) => {
+      if (data.results === "The game is being updated.")
+        this.updateAlert = true;
+
       getEvents(data.token).then(({ data }) => {
         this.events = data?.results.map(e => ({
           ...e,
