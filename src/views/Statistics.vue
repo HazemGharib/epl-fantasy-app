@@ -59,11 +59,13 @@ export default {
         if (data.results === "The game is being updated.")
           this.updateAlert = true;
 
-        this.statistics = data.results.map(p => ({
-          ...p,
-          // eslint-disable-next-line
+        this.statistics = data.results
+          .map(p => ({
+            ...p,
+            // eslint-disable-next-line
           player_name: `${p.first_name} ${p.last_name}`
-        }));
+          }))
+          .sort((p1, p2) => p1.threat_rank - p2.threat_rank);
       });
     });
   }
