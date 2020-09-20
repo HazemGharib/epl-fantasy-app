@@ -7,9 +7,10 @@
         v-model="statisticsSearch"
         append-icon="mdi-magnify"
         label="Search"
+        color="#943c9b"
         single-line
         hide-details
-      ></v-text-field>
+      />
     </v-card-title>
     <v-data-table
       :loading="!statistics"
