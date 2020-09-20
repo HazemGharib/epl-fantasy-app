@@ -12,19 +12,21 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <v-row v-if="!updateAlert">
+
+    <div v-if="!updateAlert">
       <v-col cols="12" class="mt-2 mb-2" v-if="fixtures">
         <div class="font-weight-black text-h4 text-center">Fixtures</div>
         <FixturesCard :teams="teams" :fixtures="fixtures" :players="players" />
       </v-col>
-    </v-row>
-    <v-row v-if="!updateAlert">
+    </div>
+
+    <v-row no-gutters v-if="!updateAlert">
       <v-col
         cols="12"
         sm="12"
-        md="6"
+        md="12"
         lg="4"
-        class="mt-2 mb-2"
+        class="my-2"
         v-if="currentEvent && currentEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Current Event</div>
@@ -33,9 +35,9 @@
       <v-col
         cols="12"
         sm="12"
-        md="6"
+        md="12"
         lg="4"
-        class="mt-2 mb-2"
+        class="my-2"
         v-if="nextEvent && nextEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Next Event</div>
@@ -44,19 +46,20 @@
       <v-col
         cols="12"
         sm="12"
-        md="6"
+        md="12"
         lg="4"
-        class="mt-2 mb-2"
+        class="my-2"
         v-if="lastEvent && lastEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Last Event</div>
         <EventCard :event="lastEvent" :players="players" />
       </v-col>
     </v-row>
-    <v-row v-if="!updateAlert">
+
+    <v-row no-gutters v-if="!updateAlert">
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="6"
         lg="4"
         class="mt-2 mb-2"
@@ -71,7 +74,7 @@
       </v-col>
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="6"
         lg="4"
         class="mt-2 mb-2"
@@ -86,7 +89,7 @@
       </v-col>
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="6"
         lg="4"
         class="mt-2 mb-2"
@@ -144,8 +147,6 @@ export default {
           photo: p.photo
         }));
 
-        console.log(data.results);
-
         this.teams = data.teams.map(t => ({
           code: t.code,
           id: t.id,
@@ -155,7 +156,6 @@ export default {
           strength: t.strength,
           photo: t.photo
         }));
-        console.log(this.teams);
       });
 
       getStatistics(data.token).then(({ data }) => {

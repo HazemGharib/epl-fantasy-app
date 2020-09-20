@@ -1,47 +1,52 @@
 <template>
-  <div v-if="players" class="fixturesCard">
-    <div class="ma-8">
-      <v-card class="pa-2 text-center">
-        <div class="my-4" v-for="info in fixtures" :key="info.id">
+  <v-row v-if="players" class="fixturesCard">
+    <v-col cols="12" md="6" sm="6" v-for="info in fixtures" :key="info.id">
+      <v-card class="mx-8 my-2 text-center">
+        <div class="py-8">
           <div>
             {{ new Date(info.kickoff_time).toLocaleDateString("en-my") }}
+            {{ new Date(info.kickoff_time).toLocaleTimeString("en-my") }}
           </div>
           <div>
             <v-row>
-              <v-col cols="3" />
-              <v-col cols="2"
-                ><v-img
+              <v-col cols="2" />
+              <v-col cols="3">
+                <v-img
                   class="mx-auto"
                   width="50"
                   :src="getTeam(info.team_h).photo"
-              /></v-col>
-              <v-col cols="2">{{ info.finished ? "FT" : "-" }}</v-col>
-              <v-col cols="2"
-                ><v-img
+                />
+              </v-col>
+              <v-col class="pt-6" cols="2">
+                {{ !info.started ? "-" : info.finished ? "FT" : "VS" }}
+              </v-col>
+              <v-col cols="3">
+                <v-img
                   class="mx-auto"
                   width="50"
                   :src="getTeam(info.team_a).photo"
-              /></v-col>
-              <v-col cols="3" />
+                />
+              </v-col>
+              <v-col cols="2" />
             </v-row>
           </div>
           <div>
             <v-row>
-              <v-col cols="3" />
-              <v-col class="text-h6" cols="2">{{
-                info.team_h_score ? info.team_h_score : "-"
-              }}</v-col>
               <v-col cols="2" />
-              <v-col class="text-h6" cols="2">{{
-                info.team_a_score ? info.team_a_score : "-"
-              }}</v-col>
-              <v-col cols="3" />
+              <v-col class="text-h6" cols="3">
+                {{ info.team_h_score ? info.team_h_score : "0" }}
+              </v-col>
+              <v-col cols="2" />
+              <v-col class="text-h6" cols="3">
+                {{ info.team_a_score ? info.team_a_score : "0" }}
+              </v-col>
+              <v-col cols="2" />
             </v-row>
           </div>
         </div>
       </v-card>
-    </div>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

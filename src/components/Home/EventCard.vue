@@ -1,6 +1,6 @@
 <template>
   <div v-if="players" class="eventCard">
-    <div class="ma-8" v-for="info in event" :key="info.name">
+    <div class="pa-8" v-for="info in event" :key="info.name">
       <v-card class="pa-4 text-center">
         <div class="font-weight-black text-h4 px-4 pt-4 pb-3">
           {{ info.name }}
