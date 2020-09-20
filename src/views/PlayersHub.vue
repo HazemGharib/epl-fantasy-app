@@ -51,15 +51,19 @@ export default {
         if (data.results === "The game is being updated.")
           this.updateAlert = true;
 
-        this.players = data?.results.map(p => ({
-          ...p,
-          name: `${p.first_name} ${p.last_name}`,
-          cost: p.cost / 10,
-          // eslint-disable-next-line
+        this.players = data?.results
+          .map(p => ({
+            ...p,
+            name: `${p.first_name} ${p.last_name}`,
+            cost: p.cost / 10,
+            // eslint-disable-next-line
           chance_of_playing_next_round: p.chance_of_playing_next_round !== null
-              ? p.chance_of_playing_next_round
-              : ""
-        }));
+                ? p.chance_of_playing_next_round
+                : ""
+          }))
+          .sort((p1, p2) =>
+            p1.name > p2.name ? 1 : p2.name > p1.name ? -1 : 0
+          );
       });
     });
   }
