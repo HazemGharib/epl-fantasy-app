@@ -8,7 +8,7 @@
         <div class="text-h6 font-italic">
           {{ new Date(info.deadline_time).toLocaleDateString("en-my") }}
         </div>
-        <div>Average entry score: {{ info.average_entry_score }}</div>
+        <div>Average score: {{ info.average_entry_score }}</div>
         <div>Highest score: {{ info.highest_score || "N/A" }}</div>
         <div>
           Most selected:

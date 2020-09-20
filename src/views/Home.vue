@@ -13,10 +13,17 @@
       ></v-progress-circular>
     </div>
     <v-row v-if="!updateAlert">
+      <v-col cols="12" class="mt-2 mb-2" v-if="fixtures">
+        <div class="font-weight-black text-h4 text-center">Fixtures</div>
+        <FixturesCard :teams="teams" :fixtures="fixtures" :players="players" />
+      </v-col>
+    </v-row>
+    <v-row v-if="!updateAlert">
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="6"
+        lg="4"
         class="mt-2 mb-2"
         v-if="currentEvent && currentEvent.length"
       >
@@ -25,8 +32,9 @@
       </v-col>
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="6"
+        lg="4"
         class="mt-2 mb-2"
         v-if="nextEvent && nextEvent.length"
       >
@@ -35,15 +43,25 @@
       </v-col>
       <v-col
         cols="12"
-        sm="6"
+        sm="12"
         md="6"
+        lg="4"
         class="mt-2 mb-2"
         v-if="lastEvent && lastEvent.length"
       >
         <div class="font-weight-black text-h4 text-center">Last Event</div>
         <EventCard :event="lastEvent" :players="players" />
       </v-col>
-      <v-col cols="12" sm="6" md="6" class="mt-2 mb-2" v-if="players && goals">
+    </v-row>
+    <v-row v-if="!updateAlert">
+      <v-col
+        cols="12"
+        sm="6"
+        md="6"
+        lg="4"
+        class="mt-2 mb-2"
+        v-if="players && goals"
+      >
         <div class="font-weight-black text-h4 text-center">Goals</div>
         <StatisticsCard
           :statistics="goals"
@@ -55,6 +73,7 @@
         cols="12"
         sm="6"
         md="6"
+        lg="4"
         class="mt-2 mb-2"
         v-if="players && assists"
       >
@@ -69,6 +88,7 @@
         cols="12"
         sm="6"
         md="6"
+        lg="4"
         class="mt-2 mb-2"
         v-if="players && cleanSheets"
       >
@@ -85,14 +105,17 @@
 
 <script>
 import { getEvents } from "@/services/eventsService";
+import { getFixtures } from "@/services/fixturesService";
 import { getPlayers } from "@/services/playersHubService";
 import { getStatistics } from "@/services/statisticsService";
 import { getToken } from "@/services/tokenService";
+import FixturesCard from "@/components/Home/FixturesCard";
 import EventCard from "@/components/Home/EventCard";
 import StatisticsCard from "@/components/Home/StatisticsCard";
 export default {
   name: "Home",
   components: {
+    FixturesCard,
     EventCard,
     StatisticsCard
   },
@@ -102,6 +125,8 @@ export default {
     goals: undefined,
     assists: undefined,
     cleanSheets: undefined,
+    teams: undefined,
+    fixtures: undefined,
     currentEvent: undefined,
     nextEvent: undefined,
     lastEvent: undefined
@@ -118,6 +143,19 @@ export default {
           full_name: `${p.first_name} ${p.last_name}`,
           photo: p.photo
         }));
+
+        console.log(data.results);
+
+        this.teams = data.teams.map(t => ({
+          code: t.code,
+          id: t.id,
+          name: t.name,
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          short_name: t.short_name,
+          strength: t.strength,
+          photo: t.photo
+        }));
+        console.log(this.teams);
       });
 
       getStatistics(data.token).then(({ data }) => {
@@ -137,27 +175,31 @@ export default {
           .filter(p => p.position_short === "GKP")
           .sort((p1, p2) => p2.clean_sheets - p1.clean_sheets)
           .slice(0, 5);
-        console.log(this.goals);
-        console.log(this.assists);
-        console.log(this.cleanSheets);
       });
 
-      getEvents(data.token).then(({ data }) => {
-        if (data.results === "The game is being updated.")
-          this.updateAlert = true;
+      getEvents(data.token)
+        .then(({ data }) => {
+          if (data.results === "The game is being updated.")
+            this.updateAlert = true;
 
-        this.currentEvent = data?.results.filter(
-          r => r.is_current && !r.finished
-        );
-        this.nextEvent = data?.results.filter(r => r.is_next);
+          this.currentEvent = data?.results.filter(
+            r => r.is_current && !r.finished
+          );
+          this.nextEvent = data?.results.filter(r => r.is_next);
 
-        const lastEvent = data?.results
-          .filter(i => i.finished)
-          .sort(
-            (a, b) => new Date(b.deadline_time) - new Date(a.deadline_time)
-          )[0];
-        this.lastEvent = lastEvent ? [lastEvent] : [];
-      });
+          const lastEvent = data?.results
+            .filter(i => i.finished)
+            .sort(
+              (a, b) => new Date(b.deadline_time) - new Date(a.deadline_time)
+            )[0];
+          this.lastEvent = lastEvent ? [lastEvent] : [];
+        })
+        .then(async () => {
+          const eventId = this.currentEvent[0].id;
+          const fixtures = await getFixtures(data.token, eventId);
+          const { results } = fixtures.data;
+          this.fixtures = results;
+        });
     });
   }
 };
