@@ -1,13 +1,14 @@
 <template>
   <v-card>
     <v-card-title>
-      Players Hub
+      <v-container fluid>Players Hub</v-container>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="playersSearch"
         append-icon="mdi-magnify"
         label="Search"
         color="#943c9b"
+        clearable
         single-line
         hide-details
       />
@@ -66,10 +67,10 @@ export default {
         },
         {
           text: "Name",
-          align: "start",
+          align: "center",
           sortable: false,
           value: "name",
-          width: "300"
+          width: "260"
         },
         {
           text: "Position",
@@ -87,19 +88,19 @@ export default {
           text: "Match Points",
           align: "center",
           value: "event_points",
-          width: "120"
+          width: "125"
         },
         {
           text: "Total Points",
           align: "center",
           value: "total_points",
-          width: "110"
+          width: "115"
         },
         {
           text: "Points/Game",
           align: "center",
           value: "points_per_game",
-          width: "120"
+          width: "130"
         },
         {
           text: "Price (M)",
@@ -117,7 +118,7 @@ export default {
           text: "Chance of playing %",
           align: "center",
           value: "chance_of_playing_next_round",
-          width: "150"
+          width: "160"
         }
       ]
     };

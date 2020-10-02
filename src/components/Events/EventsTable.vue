@@ -1,13 +1,14 @@
 <template>
   <v-card>
     <v-card-title>
-      Events
+      <v-container fluid>Events</v-container>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="eventsSearch"
         append-icon="mdi-magnify"
         label="Search"
         color="#943c9b"
+        clearable
         single-line
         hide-details
       />
@@ -16,7 +17,7 @@
       :loading="!events"
       :headers="headers"
       :items="events"
-      :search="eventsSearch"
+      :search="eventsSearch ? 'Gameweek ' + eventsSearch : ''"
       :items-per-page="38"
       mobile-breakpoint
       hide-default-footer

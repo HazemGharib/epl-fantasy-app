@@ -1,13 +1,14 @@
 <template>
   <v-card>
     <v-card-title>
-      Statistics
+      <v-container fluid>Statistics</v-container>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="statisticsSearch"
         append-icon="mdi-magnify"
         label="Search"
         color="#943c9b"
+        clearable
         single-line
         hide-details
       />

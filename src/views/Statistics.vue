@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-6">
+  <div class="ma-4">
     <v-alert v-if="updateAlert" class="ma-10" type="warning" border="left" dark>
       <strong>Website is being updated now</strong>
     </v-alert>

@@ -1,13 +1,14 @@
 <template>
   <v-card>
     <v-card-title>
-      Standings
+      <v-container fluid>Standings</v-container>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="standingsSearch"
         append-icon="mdi-magnify"
         label="Search"
         color="#943c9b"
+        clearable
         single-line
         hide-details
       />
@@ -76,6 +77,7 @@ export default {
         {
           text: "",
           align: "start",
+          sortable: false,
           value: "movement",
           width: "10"
         },
@@ -87,58 +89,58 @@ export default {
           width: "20"
         },
         {
-          text: "Name",
+          text: "Team",
           align: "start",
           value: "team.short_name",
-          width: "50"
+          width: "82"
         },
         {
-          text: "Played",
-          align: "center",
+          text: "P",
+          align: "start",
           value: "statistics.played",
-          width: "50"
+          width: "68"
         },
         {
           text: "W",
-          align: "center",
+          align: "start",
           value: "statistics.won",
-          width: "50"
+          width: "68"
         },
         {
           text: "D",
-          align: "center",
+          align: "start",
           value: "statistics.drawn",
-          width: "50"
+          width: "68"
         },
         {
           text: "L",
-          align: "center",
+          align: "start",
           value: "statistics.lost",
-          width: "50"
+          width: "68"
         },
         {
           text: "GF",
-          align: "center",
+          align: "start",
           value: "statistics.goal_f",
-          width: "50"
+          width: "68"
         },
         {
           text: "GA",
-          align: "center",
+          align: "start",
           value: "statistics.goal_a",
-          width: "50"
+          width: "68"
         },
         {
           text: "+/-",
-          align: "center",
+          align: "start",
           value: "statistics.goal_d",
-          width: "50"
+          width: "68"
         },
         {
-          text: "Points",
-          align: "center",
+          text: "PTS",
+          align: "start",
           value: "statistics.points",
-          width: "50"
+          width: "74"
         }
       ]
     };

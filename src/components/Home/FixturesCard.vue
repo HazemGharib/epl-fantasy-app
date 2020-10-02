@@ -18,7 +18,8 @@
                 />
               </v-col>
               <v-col class="pt-6" cols="2">
-                {{ !info.started ? "-" : info.finished ? "FT" : "VS" }}
+                <p>{{ !info.started ? "-" : info.finished ? "FT" : "VS" }}</p>
+                <p>{{ info.minutes }}</p>
               </v-col>
               <v-col cols="3">
                 <v-img
