@@ -146,6 +146,10 @@ export default {
           id: p.id,
           // eslint-disable-next-line
           full_name: `${p.first_name} ${p.last_name}`,
+          // eslint-disable-next-line
+          first_name: p.first_name,
+          // eslint-disable-next-line
+          last_name: p.last_name,
           photo: p.photo
         }));
 

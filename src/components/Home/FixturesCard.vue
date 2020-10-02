@@ -18,8 +18,20 @@
                 />
               </v-col>
               <v-col class="pt-6" cols="2">
-                <p>{{ !info.started ? "-" : info.finished ? "FT" : "VS" }}</p>
-                <p>{{ info.minutes }}</p>
+                <p>
+                  {{
+                    !info.started
+                      ? "-"
+                      : info.minutes == 45
+                      ? "HT"
+                      : info.finished
+                      ? "FT"
+                      : "VS"
+                  }}
+                </p>
+                <p class="caption" v-if="info.started">
+                  {{ info.minutes + "'" }}
+                </p>
               </v-col>
               <v-col cols="3">
                 <v-img
@@ -42,6 +54,81 @@
                 {{ info.team_a_score ? info.team_a_score : "0" }}
               </v-col>
               <v-col cols="2" />
+            </v-row>
+          </div>
+          <div>
+            <v-row>
+              <v-col cols="1" />
+              <v-col class="text-h6" cols="5">
+                <div
+                  v-for="stat in info.stats.filter(
+                    s => s.identifier === 'goals_scored'
+                  )"
+                  :key="stat.code"
+                >
+                  <p
+                    class="text-caption"
+                    v-for="item in stat.h"
+                    :key="item.element"
+                  >
+                    {{ `${item.value} ` + getPlayer(item.element).last_name }}
+                  </p>
+                </div>
+                <div
+                  v-for="stat in info.stats.filter(
+                    s => s.identifier === 'own_goals'
+                  )"
+                  :key="stat.code"
+                >
+                  <p
+                    class="text-caption"
+                    v-for="item in stat.a"
+                    :key="item.element"
+                  >
+                    {{
+                      `${item.value} ` +
+                        getPlayer(item.element).last_name +
+                        " (OG)"
+                    }}
+                  </p>
+                </div>
+              </v-col>
+              <!-- <v-col cols="2" /> -->
+              <v-col class="text-h6" cols="5">
+                <div
+                  v-for="stat in info.stats.filter(
+                    s => s.identifier === 'goals_scored'
+                  )"
+                  :key="stat.code"
+                >
+                  <p
+                    class="text-caption"
+                    v-for="item in stat.a"
+                    :key="item.element"
+                  >
+                    {{ `${item.value} ` + getPlayer(item.element).last_name }}
+                  </p>
+                </div>
+                <div
+                  v-for="stat in info.stats.filter(
+                    s => s.identifier === 'own_goals'
+                  )"
+                  :key="stat.code"
+                >
+                  <p
+                    class="text-caption"
+                    v-for="item in stat.h"
+                    :key="item.element"
+                  >
+                    {{
+                      `${item.value} ` +
+                        getPlayer(item.element).last_name +
+                        " (OG)"
+                    }}
+                  </p>
+                </div>
+              </v-col>
+              <v-col cols="1" />
             </v-row>
           </div>
         </div>
