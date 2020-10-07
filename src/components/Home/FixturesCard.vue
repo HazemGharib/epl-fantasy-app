@@ -1,5 +1,5 @@
 <template>
-  <v-row v-if="players" class="fixturesCard">
+  <v-row no-gutters v-if="players" class="fixturesCard">
     <v-col cols="12" md="6" sm="6" v-for="info in fixtures" :key="info.id">
       <v-card class="mx-8 my-2 text-center">
         <div class="py-8">

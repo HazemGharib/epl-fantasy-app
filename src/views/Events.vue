@@ -3,7 +3,12 @@
     <v-alert v-if="updateAlert" class="mt-16" type="warning" border="left" dark>
       <strong>Website is being updated now</strong>
     </v-alert>
-    <EventsTable v-if="!updateAlert" :events="events" :players="players" />
+    <EventsTable
+      v-if="!updateAlert"
+      :events="events"
+      :players="players"
+      :teams="teams"
+    />
   </div>
 </template>
 
@@ -20,7 +25,8 @@ export default {
     return {
       updateAlert: false,
       events: undefined,
-      players: undefined
+      players: undefined,
+      teams: undefined
     };
   },
   mounted() {
@@ -32,14 +38,24 @@ export default {
         this.players = data.results.map(p => ({
           id: p.id,
           // eslint-disable-next-line
-          full_name: `${p.first_name} ${p.last_name} `
+          full_name: `${p.first_name} ${p.last_name}`,
+          // eslint-disable-next-line
+          first_name: p.first_name,
+          // eslint-disable-next-line
+          last_name: p.last_name,
+          photo: p.photo
+        }));
+
+        this.teams = data.teams.map(t => ({
+          code: t.code,
+          id: t.id,
+          name: t.name,
+          // eslint-disable-next-line
+          short_name: t.short_name,
+          strength: t.strength,
+          photo: t.photo
         }));
       });
-    });
-
-    getToken().then(({ data }) => {
-      if (data.results === "The game is being updated.")
-        this.updateAlert = true;
 
       getEvents(data.token).then(({ data }) => {
         this.events = data?.results.map(e => ({
