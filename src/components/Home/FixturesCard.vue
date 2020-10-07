@@ -19,18 +19,7 @@
               </v-col>
               <v-col class="pt-6" cols="2">
                 <p>
-                  {{
-                    !info.started
-                      ? "-"
-                      : info.minutes == 45
-                      ? "HT"
-                      : info.finished
-                      ? "FT"
-                      : "VS"
-                  }}
-                </p>
-                <p class="caption" v-if="info.started">
-                  {{ info.minutes + "'" }}
+                  {{ !info.started ? "-" : info.finished ? "FT" : "VS" }}
                 </p>
               </v-col>
               <v-col cols="3">
@@ -93,7 +82,6 @@
                   </p>
                 </div>
               </v-col>
-              <!-- <v-col cols="2" /> -->
               <v-col class="text-h6" cols="5">
                 <div
                   v-for="stat in info.stats.filter(

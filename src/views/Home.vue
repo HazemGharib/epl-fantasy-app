@@ -4,7 +4,10 @@
       <strong>Website is being updated now</strong>
     </v-alert>
 
-    <div v-if="!players && !fixtures && !updateAlert" class="ma-16 text-center">
+    <div
+      v-if="!players && !previousFixtures && !upcomingFixtures && !updateAlert"
+      class="ma-16 text-center"
+    >
       <v-progress-circular
         :size="100"
         :width="10"
@@ -14,15 +17,40 @@
     </div>
 
     <div
-      v-if="!updateAlert && players && fixtures && (currentEvent || nextEvent)"
+      v-if="
+        !updateAlert &&
+          players &&
+          previousFixtures &&
+          upcomingFixtures &&
+          (currentEvent || nextEvent)
+      "
     >
       <v-col cols="12" class="mt-4 mb-2">
-        <div class="font-weight-black text-h4 text-center">Fixtures</div>
-        <FixturesCard :teams="teams" :fixtures="fixtures" :players="players" />
+        <v-col cols="12" class="font-weight-black text-h4 text-center">
+          Fixtures
+        </v-col>
+        <v-col cols="12">
+          <v-btn
+            @click="showPreviousFixtures = !showPreviousFixtures"
+            color="#37003c"
+            class="mx-5"
+            dark
+          >
+            {{ showPreviousFixtures ? "Upcoming" : "Previous" }}
+          </v-btn>
+        </v-col>
+        <FixturesCard
+          :teams="teams"
+          :fixtures="showPreviousFixtures ? previousFixtures : upcomingFixtures"
+          :players="players"
+        />
       </v-col>
     </div>
 
-    <v-row no-gutters v-if="!updateAlert && players && fixtures">
+    <v-row
+      no-gutters
+      v-if="!updateAlert && players && previousFixtures && upcomingFixtures"
+    >
       <v-col
         cols="12"
         sm="12"
@@ -58,7 +86,10 @@
       </v-col>
     </v-row>
 
-    <v-row no-gutters v-if="!updateAlert && players && fixtures">
+    <v-row
+      no-gutters
+      v-if="!updateAlert && players && previousFixtures && upcomingFixtures"
+    >
       <v-col
         cols="12"
         sm="12"
@@ -125,13 +156,15 @@ export default {
     StatisticsCard
   },
   data: () => ({
+    showPreviousFixtures: false,
     updateAlert: false,
     players: undefined,
     goals: undefined,
     assists: undefined,
     cleanSheets: undefined,
     teams: undefined,
-    fixtures: undefined,
+    upcomingFixtures: undefined,
+    previousFixtures: undefined,
     currentEvent: undefined,
     nextEvent: undefined,
     lastEvent: undefined
@@ -201,10 +234,18 @@ export default {
           this.lastEvent = lastEvent ? [lastEvent] : [];
         })
         .then(async () => {
-          const eventId = this.currentEvent[0]?.id || this.nextEvent[0].id;
-          const fixtures = await getFixtures(data.token, eventId);
-          const { results } = fixtures.data;
-          this.fixtures = results;
+          const lastEventId = this.lastEvent[0]?.id;
+          const upcomingEventId =
+            this.currentEvent[0]?.id || this.nextEvent[0].id;
+
+          const previousFixtures = await getFixtures(data.token, lastEventId);
+          const upcomingFixtures = await getFixtures(
+            data.token,
+            upcomingEventId
+          );
+
+          this.upcomingFixtures = upcomingFixtures.data.results;
+          this.previousFixtures = previousFixtures.data.results;
         });
     });
   }
