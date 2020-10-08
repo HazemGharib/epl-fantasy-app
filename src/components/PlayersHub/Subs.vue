@@ -10,7 +10,7 @@
         "
       />
       <div class="placeholder">
-        <div>{{ getPlayer(player.element).last_name }}</div>
+        <div>{{ getPlayer(player.element).web_name }}</div>
         <div>{{ player.points }}</div>
       </div>
     </div>
