@@ -172,7 +172,7 @@ export default {
         .then(() => (this.dialog = true));
     },
     getPlayer(id) {
-      return this.$props.players?.find(p => p.id === id)?.full_name;
+      return this.$props.players?.find(p => p.id === id)?.web_name;
     }
   }
 };

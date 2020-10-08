@@ -40,6 +40,8 @@ export default {
           // eslint-disable-next-line
           full_name: `${p.first_name} ${p.last_name}`,
           // eslint-disable-next-line
+          web_name: p.web_name,
+          // eslint-disable-next-line
           first_name: p.first_name,
           // eslint-disable-next-line
           last_name: p.last_name,

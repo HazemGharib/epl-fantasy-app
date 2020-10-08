@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters v-if="players" class="fixturesCard">
     <v-col cols="12" md="6" sm="6" v-for="info in fixtures" :key="info.id">
-      <v-card class="mx-8 my-2 text-center">
+      <v-card class="mx-2 my-2 text-center">
         <div class="py-8">
           <div>
             {{ new Date(info.kickoff_time).toLocaleDateString("en-my") }}
@@ -17,11 +17,7 @@
                   :src="getTeam(info.team_h).photo"
                 />
               </v-col>
-              <v-col class="pt-6" cols="2">
-                <p>
-                  {{ !info.started ? "-" : info.finished ? "FT" : "VS" }}
-                </p>
-              </v-col>
+              <v-col cols="2" />
               <v-col cols="3">
                 <v-img
                   class="mx-auto"
@@ -38,7 +34,11 @@
               <v-col class="text-h6" cols="3">
                 {{ info.team_h_score ? info.team_h_score : "0" }}
               </v-col>
-              <v-col cols="2" />
+              <v-col cols="2">
+                <p class="caption">
+                  {{ !info.started ? "-" : info.finished ? "FT" : "VS" }}
+                </p>
+              </v-col>
               <v-col class="text-h6" cols="3">
                 {{ info.team_a_score ? info.team_a_score : "0" }}
               </v-col>
@@ -60,7 +60,7 @@
                     v-for="item in stat.h"
                     :key="item.element"
                   >
-                    {{ `${item.value} ` + getPlayer(item.element).last_name }}
+                    {{ `${item.value} ` + getPlayer(item.element).web_name }}
                   </p>
                 </div>
                 <div
@@ -76,7 +76,7 @@
                   >
                     {{
                       `${item.value} ` +
-                        getPlayer(item.element).last_name +
+                        getPlayer(item.element).web_name +
                         " (OG)"
                     }}
                   </p>
@@ -94,7 +94,7 @@
                     v-for="item in stat.a"
                     :key="item.element"
                   >
-                    {{ `${item.value} ` + getPlayer(item.element).last_name }}
+                    {{ `${item.value} ` + getPlayer(item.element).web_name }}
                   </p>
                 </div>
                 <div
@@ -110,7 +110,7 @@
                   >
                     {{
                       `${item.value} ` +
-                        getPlayer(item.element).last_name +
+                        getPlayer(item.element).web_name +
                         " (OG)"
                     }}
                   </p>
