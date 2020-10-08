@@ -178,6 +178,8 @@ export default {
         this.players = data.results.map(p => ({
           id: p.id,
           // eslint-disable-next-line
+          web_name: p.web_name,
+          // eslint-disable-next-line
           full_name: `${p.first_name} ${p.last_name}`,
           // eslint-disable-next-line
           first_name: p.first_name,
