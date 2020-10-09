@@ -96,7 +96,9 @@ export default {
     },
     async getFantasyTeam({ token, session }) {
       if (!this.sessionExists) {
-        this.$cookie.set("eplf_session", JSON.stringify(session));
+        this.$cookie.set("eplf_session", JSON.stringify(session), {
+          expires: "1M"
+        });
         this.sessionExists = true;
       }
       this.getAllPlayers();
