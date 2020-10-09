@@ -1,12 +1,12 @@
 <template>
   <div>
     <LoginCard
-      v-if="!sessionExists()"
+      v-if="!sessionExists"
       @loginSuccess="value => getFantasyTeam(value)"
       :team="team"
     />
 
-    <v-card v-if="sessionExists()" :loading="!team || !players">
+    <v-card v-if="sessionExists" :loading="!team || !players">
       <template slot="progress">
         <v-progress-linear color="#37003c" indeterminate />
       </template>
@@ -56,11 +56,13 @@ export default {
   data() {
     return {
       players: undefined,
-      team: undefined
+      team: undefined,
+      sessionExists: undefined
     };
   },
   mounted() {
-    if (this.sessionExists()) {
+    this.sessionExists = this.$cookie.get("eplf_session")?.length > 0;
+    if (this.sessionExists) {
       this.getAllPlayers().then(() => {
         const session = JSON.parse(this.$cookie.get("eplf_session"));
         getToken().then(({ data }) => {
@@ -71,13 +73,11 @@ export default {
     }
   },
   methods: {
-    sessionExists() {
-      return this.$cookie.get("eplf_session")?.length > 0;
-    },
     logout() {
       this.$cookie.delete("eplf_session");
       this.team = undefined;
       this.players = undefined;
+      this.sessionExists = false;
     },
     async getAllPlayers() {
       getToken().then(({ data }) => {
@@ -95,11 +95,13 @@ export default {
       });
     },
     async getFantasyTeam({ token, session }) {
-      if (!this.sessionExists())
+      if (!this.sessionExists) {
         this.$cookie.set("eplf_session", JSON.stringify(session));
+        this.sessionExists = true;
+      }
       this.getAllPlayers();
       const { results } = (await getFantasyTeam(token, session)).data;
-      this.team = results;
+      if (this.sessionExists) this.team = results;
     }
   }
 };
