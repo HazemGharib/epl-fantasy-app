@@ -4,6 +4,10 @@
       <strong>Website is being updated now</strong>
     </v-alert>
 
+    <div v-if="news">
+      <NewsCarousel :news="news" />
+    </div>
+
     <div
       v-if="!players && !previousFixtures && !upcomingFixtures && !updateAlert"
       class="ma-16 text-center"
@@ -142,22 +146,27 @@
 <script>
 import { getEvents } from "@/services/eventsService";
 import { getFixtures } from "@/services/fixturesService";
+import { getNews } from "@/services/newsService";
 import { getPlayers } from "@/services/playersHubService";
 import { getStatistics } from "@/services/statisticsService";
 import { getToken } from "@/services/tokenService";
 import FixturesCard from "@/components/Home/FixturesCard";
 import EventCard from "@/components/Home/EventCard";
 import StatisticsCard from "@/components/Home/StatisticsCard";
+import NewsCarousel from "@/components/Home/NewsCarousel";
+
 export default {
   name: "Home",
   components: {
     FixturesCard,
     EventCard,
-    StatisticsCard
+    StatisticsCard,
+    NewsCarousel
   },
   data: () => ({
     showPreviousFixtures: false,
     updateAlert: false,
+    news: undefined,
     players: undefined,
     goals: undefined,
     assists: undefined,
@@ -171,6 +180,13 @@ export default {
   }),
   mounted() {
     getToken().then(({ data }) => {
+      getNews(data.token).then(({ data }) => {
+        if (data.results === "The game is being updated.")
+          this.updateAlert = true;
+
+        this.news = data.news;
+      });
+
       getPlayers(data.token).then(({ data }) => {
         if (data.results === "The game is being updated.")
           this.updateAlert = true;
