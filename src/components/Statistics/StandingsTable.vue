@@ -26,14 +26,24 @@
         <v-progress-linear color="#37003c" indeterminate />
       </template>
       <template v-slot:item.movement="{ item }">
-        <v-icon>{{
-          item.position.movement === null ||
-          item.position.movement.includes("none")
-            ? "mdi-minus"
-            : item.position.movement.includes("up")
-            ? "mdi-chevron-up"
-            : "mdi-chevron-down"
-        }}</v-icon>
+        <v-icon
+          :color="
+            item.position.movement === null ||
+            item.position.movement.includes('none')
+              ? 'grey'
+              : item.position.movement.includes('up')
+              ? 'green'
+              : 'red'
+          "
+          >{{
+            item.position.movement === null ||
+            item.position.movement.includes("none")
+              ? "mdi-minus"
+              : item.position.movement.includes("up")
+              ? "mdi-chevron-up"
+              : "mdi-chevron-down"
+          }}</v-icon
+        >
       </template>
       <template v-slot:item.team_logo="{ item }">
         <v-tooltip bottom>
