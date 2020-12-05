@@ -12,7 +12,7 @@ export const getFantasySession = async (
   credentials: { username: string; password: string }
 ): Promise<object> =>
   axios.post(
-    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy-session`,
+    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy/fantasy-session`,
     {
       username: credentials.username,
       password: credentials.password
@@ -29,7 +29,7 @@ export const getFantasyTeam = async (
   session: object
 ): Promise<object> =>
   axios.post(
-    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy-team`,
+    `${process.env.VUE_APP_FANTASY_API_URL}/fantasy/fantasy-team`,
     {
       session
     },

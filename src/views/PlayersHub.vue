@@ -48,7 +48,7 @@ export default {
   mounted() {
     getToken().then(({ data }) => {
       getPlayers(data.token).then(({ data }) => {
-        if (data.results === "The game is being updated.")
+        if (!data || data.results === "The game is being updated.")
           this.updateAlert = true;
 
         this.players = data?.results
@@ -57,7 +57,8 @@ export default {
             name: `${p.first_name} ${p.last_name}`,
             cost: p.cost / 10,
             // eslint-disable-next-line
-          chance_of_playing_next_round: p.chance_of_playing_next_round !== null
+            chance_of_playing_next_round:
+              p.chance_of_playing_next_round !== null
                 ? p.chance_of_playing_next_round
                 : ""
           }))
