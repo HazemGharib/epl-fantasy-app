@@ -103,7 +103,8 @@ export default {
             name: `${p.first_name} ${p.last_name}`,
             cost: p.cost / 10,
             // eslint-disable-next-line
-          chance_of_playing_next_round: p.chance_of_playing_next_round !== null
+            chance_of_playing_next_round:
+              p.chance_of_playing_next_round !== null
                 ? p.chance_of_playing_next_round
                 : ""
           }));

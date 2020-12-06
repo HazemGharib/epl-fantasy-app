@@ -46,8 +46,11 @@
             </v-row>
           </div>
           <div>
-            <v-list v-if="info.team_h_score || info.team_a_score">
-              <v-list-group no-action prepend-icon="mdi-soccer">
+            <v-list
+              v-if="info.team_h_score || info.team_a_score"
+              class="deep-purple--text"
+            >
+              <v-list-group no-action prepend-icon="mdi-soccer" color="#37003c">
                 <template v-slot:activator>
                   <v-list-item-content>
                     <v-list-item-title>Goal Scorers</v-list-item-title>
