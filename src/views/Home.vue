@@ -254,16 +254,18 @@ export default {
         .then(async () => {
           const lastEventId = this.lastEvent[0]?.id;
           const upcomingEventId =
-            this.currentEvent[0]?.id || this.nextEvent[0].id;
+            this.currentEvent[0]?.id || this.nextEvent[0]?.id;
 
-          const previousFixtures = await getFixtures(data.token, lastEventId);
-          const upcomingFixtures = await getFixtures(
-            data.token,
-            upcomingEventId
-          );
+          const previousFixtures = lastEventId
+            ? await getFixtures(data.token, lastEventId)
+            : undefined;
+          const upcomingFixtures = upcomingEventId
+            ? await getFixtures(data.token, upcomingEventId)
+            : undefined;
 
-          this.upcomingFixtures = upcomingFixtures.data.results;
-          this.previousFixtures = previousFixtures.data.results;
+          this.upcomingFixtures =
+            upcomingFixtures?.data?.results || previousFixtures?.data?.results;
+          this.previousFixtures = previousFixtures?.data?.results;
         });
     });
   }
