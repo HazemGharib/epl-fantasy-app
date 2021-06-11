@@ -13,15 +13,15 @@
       grow
     >
       <v-tabs-slider color="#f7003c"></v-tabs-slider>
-      <v-tab key="standings">Standings</v-tab>
-      <v-tab key="statistics">Statistics</v-tab>
+      <v-tab key="standingsTab">Standings</v-tab>
+      <v-tab key="statisticsTab">Statistics</v-tab>
     </v-tabs>
 
     <v-tabs-items touchless v-model="tab">
-      <v-tab-item key="standings">
+      <v-tab-item key="standingsTab">
         <StandingsTable :standings="standings" />
       </v-tab-item>
-      <v-tab-item key="statistics">
+      <v-tab-item key="statisticsTab">
         <StatisticsTable :statistics="statistics" />
       </v-tab-item>
     </v-tabs-items>

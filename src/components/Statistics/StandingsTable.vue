@@ -25,10 +25,10 @@
       <template slot="progress">
         <v-progress-linear color="#37003c" indeterminate />
       </template>
-      <template v-slot:item.movement="{ item }">
+      <template v-slot:[`item.movement`]="{ item }">
         <v-icon
           :color="
-            item.position.movement === null ||
+            [null, undefined].includes(item.position.movement) ||
             item.position.movement.includes('none')
               ? 'grey'
               : item.position.movement.includes('up')
@@ -36,7 +36,7 @@
               : 'red'
           "
           >{{
-            item.position.movement === null ||
+            [null, undefined].includes(item.position.movement) ||
             item.position.movement.includes("none")
               ? "mdi-minus"
               : item.position.movement.includes("up")
@@ -45,7 +45,7 @@
           }}</v-icon
         >
       </template>
-      <template v-slot:item.team_logo="{ item }">
+      <template v-slot:[`item.team_logo`]="{ item }">
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-img
