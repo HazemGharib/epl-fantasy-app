@@ -24,8 +24,7 @@
       v-if="
         !updateAlert &&
           players &&
-          previousFixtures &&
-          upcomingFixtures &&
+          (previousFixtures || upcomingFixtures) &&
           (currentEvent || nextEvent)
       "
     >
@@ -53,7 +52,7 @@
 
     <v-row
       no-gutters
-      v-if="!updateAlert && players && previousFixtures && upcomingFixtures"
+      v-if="!updateAlert && players && (previousFixtures || upcomingFixtures)"
     >
       <v-col
         cols="12"
@@ -92,7 +91,7 @@
 
     <v-row
       no-gutters
-      v-if="!updateAlert && players && previousFixtures && upcomingFixtures"
+      v-if="!updateAlert && players && (previousFixtures || upcomingFixtures)"
     >
       <v-col
         cols="12"
